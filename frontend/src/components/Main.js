@@ -115,20 +115,14 @@ class Main extends React.Component {
                             </div>
                         </Row>
                     </div>
-                    
                     <div>
                         <br />
-                    </div>
-                    <div>
                         <Chart companyInfo={this.props.companyInfo} />
-                    </div>
-                    <div>
                         <br />
                     </div>
                     <div>
                         <Table allWAData={this.props.allWAData} />
                     </div>
-                    
                 </div>
             </Container>
         )
