@@ -1,2 +1,2 @@
 # fullstackReactNode
-React, Redux, with Node, Express, and MySQL coming soon.
+React, Redux, adding Node, Express, using SQL database soon.
