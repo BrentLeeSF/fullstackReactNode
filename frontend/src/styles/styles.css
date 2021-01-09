@@ -1,0 +1,22 @@
+body {
+  font-family: Verdana, sans-serif; }
+ 
+h1, h2, h3, h4, h5 {
+
+  /*font-family: "Lobster", cursive;*/
+  font-family: Helvetica, sans-serif;
+   }
+p { font-family: Verdana: ;}
+h2 { color: #3046C5; }
+
+ .mainContainer {
+ 	font-family: Verdana, sans-serif; 
+ 	font-size: 18px;
+ }
+ .bold {
+ 	font-weight: bold;
+ 	font-size: 24px;
+ }
+
+header h2 {
+  color: #CEC8FF; }
