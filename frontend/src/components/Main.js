@@ -72,7 +72,7 @@ class Main extends React.Component {
             <Container fluid="sm">
                 <div className="App">
                     <div>
-                        <p>Note: Retail store is only listed if it has reported sales</p>
+                        <p>Select County and Company to see sales data. Or, search or click table</p>
                     </div>
                     <div>
                         <Row>
