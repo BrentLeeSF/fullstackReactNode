@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import  { tagManagerId } from '../shared/urls';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from "react-bootstrap-table2-paginator";
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';

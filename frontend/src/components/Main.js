@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from 'react-redux';
-import  { tagManagerId } from '../shared/urls';
 import Table from './Table';
 import Chart from './Chart';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
@@ -130,4 +129,3 @@ class Main extends React.Component {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);
-
