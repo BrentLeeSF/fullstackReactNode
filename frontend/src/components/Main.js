@@ -72,9 +72,6 @@ class Main extends React.Component {
             <Container fluid="sm">
                 <div className="App">
                     <div>
-                         <title>Budding Trends: Cannabis Data Analytics Tools</title>
-                    </div>
-                    <div>
                         <p>Note: Retail store is only listed if it has reported sales</p>
                     </div>
                     <div>
