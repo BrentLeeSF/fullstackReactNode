@@ -2,8 +2,7 @@ import React from "react";
 import { connect } from 'react-redux';
 import Table from './Table';
 import Chart from './Chart';
-import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Dropdown } from 'react-bootstrap';
 import { fetchAllWashingtonData, fetchAllWashingtonCounties, fetchSelectedCounty, fetchCompany } from '../redux/actionCreators/WashingtonActionCreator';
 
 
@@ -78,34 +77,35 @@ class Main extends React.Component {
                         <Row>
                             <div className="county-dropdown">
                                 <Col sm={12} md={3} lg={2}>
-                                    <Dropdown isOpen={this.state.countyDropDownOpen} toggle={this.toggleCountyDropDown} bg="dark" variant="dark">
-                                        <DropdownToggle caret id="county-dropdown" bg="dark" variant="dark">
+                                    <Dropdown direction="down" bg="dark" variant="dark">
+                                        <Dropdown.Toggle caret isOpen={this.state.countyDropDownOpen} toggle={this.toggleCountyDropDown} id="county-dropdown" bg="dark" variant="dark">
                                             Select County
-                                        </DropdownToggle>
-                                        <DropdownMenu bg="dark" variant="dark">
+                                        </Dropdown.Toggle>
+                                        <Dropdown.Menu direction="down" bg="dark" variant="dark">
+
                                             {this.props.countyList.map((eachCounty, index) => 
                                                 <div key={index}>
-                                                    <DropdownItem onClick={() => this.onCountySelect(eachCounty)}>{eachCounty.county}</DropdownItem>
+                                                    <Dropdown.Item onClick={() => this.onCountySelect(eachCounty)}>{eachCounty.county}</Dropdown.Item>
                                                 </div>
-                                             )}
-                                        </DropdownMenu>
-                                        
+                                            )}
+
+                                        </Dropdown.Menu>
                                     </Dropdown>
                                 </Col>
                             </div>
                             <div className="company-dropdown">
                                 <Col sm={12} md={3} lg={2}>
-                                    <Dropdown isOpen={this.state.companyDropDownOpen} toggle={this.toggleCompanyDropDown} bg="dark" variant="dark">
-                                        <DropdownToggle caret id="company-dropdown" bg="dark" variant="dark">
+                                    <Dropdown direction="down" bg="dark" variant="dark">
+                                        <Dropdown.Toggle caret isOpen={this.state.companyDropDownOpen} toggle={this.toggleCompanyDropDown} id="company-dropdown" bg="dark" variant="dark">
                                             Select Company
-                                        </DropdownToggle>
-                                        <DropdownMenu bg="dark" variant="dark">
+                                        </Dropdown.Toggle>
+                                        <Dropdown.Menu direction="down" bg="dark" variant="dark">
                                             {this.props.countyCompaniesData.map((eachCompany, index) => 
                                                 <div key={index}>
-                                                    <DropdownItem onClick={() => this.onCompanySelect(eachCompany)}>{eachCompany.name}</DropdownItem>
+                                                    <Dropdown.Item onClick={() => this.onCompanySelect(eachCompany)}>{eachCompany.name}</Dropdown.Item>
                                                 </div>
                                             )}
-                                        </DropdownMenu>    
+                                        </Dropdown.Menu>    
                                     </Dropdown>
                                 </Col>
                             </div>
@@ -113,7 +113,7 @@ class Main extends React.Component {
                     </div>
                     <div>
                         <br />
-                        <Chart companyInfo={this.props.companyInfo} />
+                            <Chart companyInfo={this.props.companyInfo} />
                         <br />
                     </div>
                     <div>
@@ -126,3 +126,5 @@ class Main extends React.Component {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);
+
+
