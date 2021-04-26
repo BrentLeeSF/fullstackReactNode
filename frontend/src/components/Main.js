@@ -1,5 +1,5 @@
-import React from "react";
-import { connect } from 'react-redux';
+import React, { useState, useEffect } from "react";
+import { connect, useDispatch } from 'react-redux';
 import Table from './Table';
 import Chart from './Chart';
 import { Container, Row, Col, Dropdown } from 'react-bootstrap';
@@ -23,49 +23,35 @@ const mapDispatchToProps = {
 };
 
 
-class Main extends React.Component {
+const Main = (props) => {
 
-    constructor(props) {
+    const { 
+        fetchAllWashingtonData, 
+        fetchAllWashingtonCounties, 
+        allWAData, 
+        countyList, 
+        countyCompaniesData, 
+        companyInfo } = props;
 
-        super(props);
+    const [countyDropDownOpen, setCountyDropDownOpen] = useState(false);
+    const [companyDropDownOpen, setCompanyDropDownOpen] = useState(false);
 
-        this.state = {
-            countyDropDownOpen: false,
-            companyDropDownOpen: false,
-            tableCompanyInfo: []
-        };
+    const dispatch = useDispatch();
+
+
+    useEffect(() => {
+        fetchAllWashingtonData();
+        fetchAllWashingtonCounties();
+    }, [fetchAllWashingtonData, fetchAllWashingtonCounties]);
+
+    const onCountySelect = async (newCountyValue) => {
+        dispatch(fetchSelectedCounty(newCountyValue.county));
     }
 
-
-    async componentDidMount() {
-        this.props.fetchAllWashingtonData();
-        this.props.fetchAllWashingtonCounties();
+    const onCompanySelect = async (newCompanyValue) => {
+        dispatch(fetchCompany(newCompanyValue.id));
     }
 
-
-    toggleCountyDropDown = () => {
-        this.setState(prevState => ({
-            countyDropDownOpen: !prevState.countyDropDownOpen
-        }));
-    }
-
-    toggleCompanyDropDown = () => {
-        this.setState(prevState => ({
-            companyDropDownOpen: !prevState.companyDropDownOpen
-        }));
-    }
-
-    async onCountySelect(newCountyValue) {
-        this.props.fetchSelectedCounty(newCountyValue.county);
-    }
-
-    async onCompanySelect(newCompanyValue) {
-        this.props.fetchCompany(newCompanyValue.id);
-    }
-
-
-
-    render() {
 
         return (
             <Container fluid="sm">
@@ -78,14 +64,14 @@ class Main extends React.Component {
                             <div className="county-dropdown">
                                 <Col sm={12} md={3} lg={2}>
                                     <Dropdown direction="down" bg="dark" variant="dark">
-                                        <Dropdown.Toggle caret isOpen={this.state.countyDropDownOpen} toggle={this.toggleCountyDropDown} id="county-dropdown" bg="dark" variant="dark">
+                                        <Dropdown.Toggle onToggle={e => setCountyDropDownOpen(!countyDropDownOpen)} id="county-dropdown" bg="dark" variant="dark">
                                             Select County
                                         </Dropdown.Toggle>
                                         <Dropdown.Menu direction="down" bg="dark" variant="dark">
 
-                                            {this.props.countyList.map((eachCounty, index) => 
+                                            {countyList.map((eachCounty, index) => 
                                                 <div key={index}>
-                                                    <Dropdown.Item onClick={() => this.onCountySelect(eachCounty)}>{eachCounty.county}</Dropdown.Item>
+                                                    <Dropdown.Item onClick={() => onCountySelect(eachCounty)}>{eachCounty.county}</Dropdown.Item>
                                                 </div>
                                             )}
 
@@ -96,13 +82,13 @@ class Main extends React.Component {
                             <div className="company-dropdown">
                                 <Col sm={12} md={3} lg={2}>
                                     <Dropdown direction="down" bg="dark" variant="dark">
-                                        <Dropdown.Toggle caret isOpen={this.state.companyDropDownOpen} toggle={this.toggleCompanyDropDown} id="company-dropdown" bg="dark" variant="dark">
+                                        <Dropdown.Toggle onToggle={e => setCompanyDropDownOpen(!companyDropDownOpen)} id="company-dropdown" bg="dark" variant="dark">
                                             Select Company
                                         </Dropdown.Toggle>
                                         <Dropdown.Menu direction="down" bg="dark" variant="dark">
-                                            {this.props.countyCompaniesData.map((eachCompany, index) => 
+                                            {countyCompaniesData.map((eachCompany, index) => 
                                                 <div key={index}>
-                                                    <Dropdown.Item onClick={() => this.onCompanySelect(eachCompany)}>{eachCompany.name}</Dropdown.Item>
+                                                    <Dropdown.Item onClick={() => onCompanySelect(eachCompany)}>{eachCompany.name}</Dropdown.Item>
                                                 </div>
                                             )}
                                         </Dropdown.Menu>    
@@ -113,16 +99,15 @@ class Main extends React.Component {
                     </div>
                     <div>
                         <br />
-                            <Chart companyInfo={this.props.companyInfo} />
+                            <Chart companyInfo={companyInfo} />
                         <br />
                     </div>
                     <div>
-                        <Table allWAData={this.props.allWAData} />
+                        <Table allWAData={allWAData} />
                     </div>
                 </div>
             </Container>
         )
-    }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);

@@ -8,7 +8,10 @@ const Sequelize = require('sequelize');
 exports.findAll = async function(req, res) {
 
   try {
-    const data = await Store.findAll()
+    const { name } = req.params;
+    const data = await Store.findAll({
+      order: [['name', 'ASC']]
+    })
     res.send(data);
 
   } catch (error) {
@@ -42,7 +45,7 @@ exports.findByCounty = async function(req, res) {
 
   try {
       const { county } = req.params;
-
+      console.log("REQ = ",req);
       const data = await Store.findAll({
           attributes: ['id','license', 'name', 'county', 'sales'],
           where: {

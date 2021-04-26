@@ -1,5 +1,5 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useState } from 'react';
+import { connect, useDispatch } from 'react-redux';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from "react-bootstrap-table2-paginator";
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
@@ -28,27 +28,19 @@ const mapDispatchToProps = {
 };
 
 
-class Table extends React.Component {
+const Table = ({allWAData}) => {
 
-  constructor(props) {
+  const [columns] = useState([
+      { dataField: "name", text: "Name  ", filter: textFilter()},
+      { dataField: "license", text: "License "},
+      { dataField: "county", text: "County"}
+  ]);
 
-        super(props);
-
-        this.state = {
-          columns: [
-            { dataField: "name", text: "Name  ", filter: textFilter()},
-            { dataField: "license", text: "License "},
-            { dataField: "county", text: "County"}
-          ]
-        };
-    }
-
-
-  render() {
+  const dispatch = useDispatch();
 
     const rowEvents = {
       onClick: (e, row) => {
-        this.props.fetchCompany(row.id);
+        dispatch(fetchCompany(row.id));
       }
     };
 
@@ -63,8 +55,8 @@ class Table extends React.Component {
               striped="dark"
               hover
               keyField="id"
-              data={this.props.allWAData}
-              columns={this.state.columns}
+              data={allWAData}
+              columns={columns}
               pagination={paginationFactory()}
               filter={ filterFactory() }
               sort={ { dataField: ['sales'], order: 'asc' } }
@@ -74,7 +66,7 @@ class Table extends React.Component {
         </div>
       </Styles>
     );
-  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Table);
+

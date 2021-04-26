@@ -11,18 +11,15 @@ const Styles = styled.div`
 `;
 
 
-class Chart extends React.Component {
-
-
-	render() {
+const Chart = ({companyInfo}) => {
 
 		let yearmonth = '';
 		let monthlysales = [];
 		let name = '';
 		
-		if(this.props.companyInfo[0] !== undefined) {
-			name = this.props.companyInfo[0].name;
-			const parsedCompany = JSON.parse(this.props.companyInfo[0].sales);
+		if(companyInfo[0] !== undefined) {
+			name = companyInfo[0].name;
+			const parsedCompany = JSON.parse(companyInfo[0].sales);
 
 			let combinedResult = [];
 			parsedCompany.forEach(function (obj) {
@@ -113,12 +110,11 @@ class Chart extends React.Component {
 		return (
 			<Styles>
 				<article className="canvas-container">
-				<getData thisCompanyInfo={this.props.companyInfo[0]} />
+				<getData thisCompanyInfo={companyInfo[0]} />
     			<Bar data={data} options={options} />
     			</article>
     		</Styles>
   		)
-	}
   	
 }
 
