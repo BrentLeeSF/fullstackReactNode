@@ -112,4 +112,3 @@ const Main = (props) => {
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);
 
-

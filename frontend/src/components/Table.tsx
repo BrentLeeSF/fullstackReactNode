@@ -17,18 +17,20 @@ const Styles = styled.div`
     }
 `;
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: any) => {
     return {
         companyInfo: state.washington.waCompanyInfo
     };
 };
 
 const mapDispatchToProps = {
-    fetchCompany: (newCompanyValueId) => (fetchCompany(newCompanyValueId))
+    fetchCompany: (newCompanyValueId: any) => (fetchCompany(newCompanyValueId))
 };
 
 
-const Table = ({allWAData}) => {
+const Table = (props: any) => {
+
+  const {allWAData} = props;
 
   const [columns] = useState([
       { dataField: "name", text: "Name  ", filter: textFilter()},
@@ -39,7 +41,7 @@ const Table = ({allWAData}) => {
   const dispatch = useDispatch();
 
     const rowEvents = {
-      onClick: (e, row) => {
+      onClick: (e: any, row: any) => {
         dispatch(fetchCompany(row.id));
       }
     };
@@ -52,12 +54,11 @@ const Table = ({allWAData}) => {
               bootstrap4
               wrapperClasses="table-responsive"
               rowClasses="text-nowrap"
-              striped="dark"
               hover
               keyField="id"
               data={allWAData}
               columns={columns}
-              pagination={paginationFactory()}
+              pagination={paginationFactory({})}
               filter={ filterFactory() }
               sort={ { dataField: ['sales'], order: 'asc' } }
               rowEvents={rowEvents}

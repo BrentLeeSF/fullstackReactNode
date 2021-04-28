@@ -11,30 +11,33 @@ const Styles = styled.div`
 `;
 
 
-const Chart = ({companyInfo}) => {
-
-		let yearmonth = '';
-		let monthlysales = [];
-		let name = '';
+const Chart = (props: any) => {
+		const {companyInfo} = props;
+		let yearmonth: Array<string>;
+		let monthlysales: Array<string>;
+		let name: string = '';
 		
 		if(companyInfo[0] !== undefined) {
 			name = companyInfo[0].name;
 			const parsedCompany = JSON.parse(companyInfo[0].sales);
 
-			let combinedResult = [];
-			parsedCompany.forEach(function (obj) {
-    			if (!this[obj.yearmonth]) {
-        			this[obj.yearmonth] = {id: obj.id, yearmonth: obj.yearmonth, monthlysales: 0 };
-        			combinedResult.push(this[obj.yearmonth]);
+			let combinedResult: any = [];
+			parsedCompany.forEach(function (obj: any) {
+    			if (!parsedCompany[obj.yearmonth]) {
+        			parsedCompany[obj.yearmonth] = {id: obj.id, yearmonth: obj.yearmonth, monthlysales: 0 };
+        			combinedResult.push(parsedCompany[obj.yearmonth]);
     			}
-    			this[obj.yearmonth].monthlysales += obj.monthlysales;
+    			parsedCompany[obj.yearmonth].monthlysales += obj.monthlysales;
 			}, Object.create(null));
-
-			yearmonth = combinedResult.map(a => a.yearmonth);
-			monthlysales = combinedResult.map(a => a.monthlysales.toFixed(2));
+			
+			yearmonth = combinedResult.map((a: any) => a.yearmonth);
+			monthlysales = combinedResult.map((a: any) => a.monthlysales.toFixed(2));
+		} else {
+			yearmonth = [];
+			monthlysales = [];		
 		}
 		
-		let borderColors = [];
+		let borderColors: Array<string> = [];
 		borderColors = Array(20).fill('rgba(36, 79, 35, 1)');
 
 		const data = {
@@ -110,7 +113,6 @@ const Chart = ({companyInfo}) => {
 		return (
 			<Styles>
 				<article className="canvas-container">
-				<getData thisCompanyInfo={companyInfo[0]} />
     			<Bar data={data} options={options} />
     			</article>
     		</Styles>
